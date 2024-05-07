@@ -1,0 +1,28 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block login %}
+
+<form action="action_page.php">
+  {% csrf_token %}
+    <div class="register">
+      <label for="uname"><b>Имя пользователя</b></label>
+      <input type="text" placeholder="Введите ваше имя пользователя" name="uname" required>
+  
+      <label for="psw"><b>Пароль</b></label>
+      <input type="password" placeholder="Введите ваш пароль" name="psw" required>
+  
+      <button type="submit">Войти</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Запомнить меня
+      </label>
+    </div>
+  
+    <div class="register" style="background-color:#f1f1f1">
+      <a href="#">Забыли пароль?</a> | <a href="{% url "users:register" %}">Создать аккаунт</a>
+    </div>
+  </form>
+
+{% endblock  %}
+
+

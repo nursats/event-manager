@@ -1,0 +1,40 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static "deps/css/home.css" %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>{{ title }}</title>
+  </head>
+  <body>
+    <div class="top">
+      <nav>
+        <ul>
+          <li><a href="{% url "events:home" %}">Главная</a></li>
+          <li><a href="/contacts/">Контакты</a></li>
+          <li><a href="#cart">Избранное</a></li>
+          <li><a href="/admin/">Админ</a></li>
+          <li class="login"><a href="{% url "users:login"%}">Войти</a></li>
+        </ul>
+      </nav>
+    </div>
+    <footer class="py-4 bg-dark">
+      <div class="container">
+          <p class="m-0 text-center text-white">Copyright &copy; Nursat Seitov</p>
+      </div>
+  </footer>
+    {% block events %}{% endblock %}
+    {% block content %}{% endblock %}
+    {% block contacts %}{% endblock %}
+    {% block login %}{% endblock %}
+    {% block register %}{% endblock %}
+  </body>
+</html>

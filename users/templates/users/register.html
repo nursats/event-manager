@@ -1,0 +1,29 @@
+{% extends "home.html" %}
+{% load static %}
+
+
+{% block register %}
+<form action="action_page.php">
+    <div class="register">
+      <h1>Регистрация</h1>
+      <p>Пожалуйста, заполните эту форму, чтобы создать учетную запись.</p>
+      <hr>
+  
+      <label for="email"><b>Электронная почта</b></label>
+      <input type="text" placeholder="Введите адрес электронной почты" name="email" id="email" required>
+  
+      <label for="psw"><b>Пароль</b></label>
+      <input type="password" placeholder="Введите пароль" name="psw" id="psw" required>
+  
+      <label for="psw-repeat"><b>Повторите пароль</b></label>
+      <input type="password" placeholder="Повторите пароль" name="psw-repeat" id="psw-repeat" required>
+      <hr>
+  
+      <button type="submit" class="registerbtn">Зарегистрироваться</button>
+    </div>
+  
+    <div class="register signin">
+      <p>У вас уже есть аккаунт? <a href="{% url "users:login"%}">Войти</a>.</p>
+    </div>
+  </form>
+  {% endblock %}

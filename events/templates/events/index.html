@@ -1,0 +1,28 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block events %}
+<div class="merop">
+  <h1>Мероприятия в Астане</h1>
+</div>
+<div class="events">
+  <div class="event-container">
+    {% if events %}
+    {% for event in events %}
+    <div class="event-item">
+      <a href="{% url 'events:about' event.slug %}" class="img">
+        <img class="event-img" src="{{ event.image.url }}" />
+      </a>
+      <div class="event-name">{{ event.name }}</div>
+      <div class="event-date">{{ event.start_time.date }}</div>
+      <div class="event-time">{{ event.start_time|date:"H:i" }}</div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No events found</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+

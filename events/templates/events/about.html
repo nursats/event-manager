@@ -1,0 +1,29 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+<div class="eventcard">
+    <div class="info2">
+        <div class="img2">
+            <img class="event-img2" src="{{ event.image.url }}" />
+        </div>
+        <div class="text2">
+            <div class="event-name2">{{ event.name }}</div>
+            <div class="description">
+                <p class="desc">описание</p>
+                <div class="description-of-event2">{{ event.description }}</div>    
+            </div>
+            <p class="timee"> время</p>
+            <div class="event-time2">{{ event.start_time|date:"H:i" }}</div>
+            <div class="event-date">{{ event.formatted_start_time }}</div>
+            <p class = "location"> локация</p>
+            <div class="event-location">{{ event.place }}</div>
+            <div class="button">
+                <button>Добавить в избранное</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock  %}
