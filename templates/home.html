@@ -19,10 +19,21 @@
       <nav>
         <ul>
           <li><a href="{% url "events:home" %}">Главная</a></li>
-          <li><a href="/contacts/">Контакты</a></li>
           <li><a href="#cart">Избранное</a></li>
-          <li><a href="/admin/">Админ</a></li>
+          {% if not user.is_authenticated %}
           <li class="login"><a href="{% url "user:login"%}">Войти</a></li>
+          {% else %}
+          <li class="dropdown">
+            <a href="javascript:void(0)">Мой профиль</a>
+            <div class="dropdown-content">
+              <a href="{% url 'user:profile' %}">Личный кабинет</a>
+              {% if user.is_admin or user.is_staff %}
+              <a href="/admin/">Админ панель</a>
+              {% endif %}
+              <a href="{% url 'user:logout' %}">Выйти</a>
+            </div>
+          </li>
+          {% endif %}
         </ul>
       </nav>
     </div>

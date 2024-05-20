@@ -3,24 +3,73 @@
 
 
 {% block register %}
-<form action="action_page.php">
-  {% csrf_token %}
+<form action="{% url "user:registration" %}" method = 'POST'>
+    {% csrf_token %}
     <div class="register">
       <h1>Регистрация</h1>
       <p>Пожалуйста, заполните эту форму, чтобы создать учетную запись.</p>
       <hr>
-  
+      <div>
+      <label for="id_first_name"><b>Имя</b></label>
+      <input type="text" class = "form_control" placeholder="Введите ваше имя" name="first_name" id="id_first_name" 
+      value='{% if form.first_name.value %}{{form.first_name.value}}{% endif %}' name = 'first_name' required>
+      {% if form.first_name.errors %}
+      <div class = 'alert alert-danger alert-dismissible fade show'>{{form.first_name.errors}}</div>
+      {% endif %}
+      </div>
+      
+      <div>
+      <label for="id_last_name"><b>Фамилия</b></label>
+      <input type="text" class = "form_control" placeholder="Введите вашу фамилию"
+      value='{% if form.last_name.value %}{{form.last_name.value}}{% endif %}'
+      name="last_name" id="id_lastname"required>
+      {% if form.last_name.errors %}
+      <div class = 'alert alert-danger alert-dismissible fade show'>{{form.last_name.errors}}</div>
+      {% endif %}
+      </div>
+
+      <div>
+      <label for="username"><b>Имя пользователя</b></label>
+      <input type="text" class = "form_control" placeholder="Введите ваше имя пользователя"
+      value='{% if form.username.value %}{{form.username.value}}{% endif %}'
+      name="username" id="id_username" required>
+      {% if form.username.errors %}
+      <div class = 'alert alert-danger alert-dismissible fade show'>{{form.username.errors}}</div>
+      {% endif %}  
+      </div>
+
+      <div>
       <label for="email"><b>Электронная почта</b></label>
-      <input type="text" placeholder="Введите адрес электронной почты" name="email" id="email" required>
+      <input type="email" class = "form_control" placeholder="Введите адрес электронной почты"
+      value='{% if form.email.value %}{{form.email.value}}{% endif %}'
+      name="email" id="id_email" required>
+      {% if form.email.errors %}
+      <div class = 'alert alert-danger alert-dismissible fade show'>{{form.email.errors}}</div>
+      {% endif %}
+      </div>
   
-      <label for="psw"><b>Пароль</b></label>
-      <input type="password" placeholder="Введите пароль" name="psw" id="psw" required>
-  
-      <label for="psw-repeat"><b>Повторите пароль</b></label>
-      <input type="password" placeholder="Повторите пароль" name="psw-repeat" id="psw-repeat" required>
+      <div>
+      <label for="password1"><b>Пароль</b></label>
+      <input type="password" class = "form_control" placeholder="Введите пароль" 
+      value='{% if form.password1.value %}{{form.password1.value}}{% endif %}'
+      name="password1" id="id_password1" required>
+      {% if form.password1.errors %}
+      <div class = 'alert alert-danger alert-dismissible fade show'>{{form.password1.errors}}</div>
+      {% endif %}  
+      </div>
+
+      <div>
+      <label for="password2"><b>Повторите пароль</b></label>
+      <input type="password" class = "form_control" placeholder="Повторите пароль" 
+      value='{% if form.password2.value %}{{form.password2.value}}{% endif %}'
+      name="password2" id="id_password2" required>
+      {% if form.password2.errors %}
+      <div class = 'alert alert-danger alert-dismissible fade show'>{{form.password2.errors}}</div>
+      {% endif %}  
+      </div>
       <hr>
   
-      <button type="submit" class="registerbtn" >Зарегистрироваться</button>
+      <button type="submit" class = "form_control" class="registerbtn" >Зарегистрироваться</button>
     </div>
   
     <div class="register signin">

@@ -19,6 +19,7 @@ body {
     
 }
 .top nav ul li{
+    position: relative;
     margin-right: 120px;
 
 }
@@ -32,6 +33,31 @@ body {
 }
 .top .login {
     margin-left: auto;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #000000;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
 .merop h1{
@@ -231,7 +257,7 @@ button:hover {
   .register label {
     font-weight: bold;
   }
-  
+  .register input[type="email"],
   .register input[type="text"],
   .register input[type="password"] {
     width: 100%;
