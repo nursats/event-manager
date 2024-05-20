@@ -17,13 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls.static import static
+from event_management.settings import DEBUG
 
 from event_management import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/', include('users.urls',namespace='users')),
+    path('user/', include('users.urls',namespace='user')),
+    path('accounts/', include("django.contrib.auth.urls")),
     path('', include('events.urls')),
-
-
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if DEBUG:
+    urlpatterns += [path("__debug__/", include("debug_toolbar.urls")),]

@@ -1,6 +1,23 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
 
-class LoginForm(forms.Form):
+from users.models import User
+class UserLoginForm(AuthenticationForm):
     username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField()
+    
+    '''username = forms.CharField(
+        widget=forms.TextInput(attrs={
+            "autofocus":True,
+            "class":'form_control',
+            'placeholder':'Введите ваше имя пользователя'
+            })
+        )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"autocomplete":"current-password",
+                                          "class":'form_control',
+                                          'placeholder':'Введите ваш пароль'}),
+    )'''
+    class Meta:
+        model = User
+        fields = ['username','password']

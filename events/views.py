@@ -1,13 +1,16 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 from .models import Event
 
 def index(request):
     events = Event.objects.all().order_by('start_time')
+    paginator = Paginator(events, 5)
+    current_page = paginator.page(1)
     context = {
         'title':'Home - Главная',
         'content': 'event manager',
-        'events': events
+        'events': current_page,
     }
     
     return render(request, 'events/index.html',context)

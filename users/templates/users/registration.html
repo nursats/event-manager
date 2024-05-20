@@ -4,6 +4,7 @@
 
 {% block register %}
 <form action="action_page.php">
+  {% csrf_token %}
     <div class="register">
       <h1>Регистрация</h1>
       <p>Пожалуйста, заполните эту форму, чтобы создать учетную запись.</p>
@@ -19,11 +20,12 @@
       <input type="password" placeholder="Повторите пароль" name="psw-repeat" id="psw-repeat" required>
       <hr>
   
-      <button type="submit" class="registerbtn">Зарегистрироваться</button>
+      <button type="submit" class="registerbtn" >Зарегистрироваться</button>
     </div>
   
     <div class="register signin">
       <p>У вас уже есть аккаунт? <a href="{% url "users:login"%}">Войти</a>.</p>
     </div>
   </form>
+  
   {% endblock %}

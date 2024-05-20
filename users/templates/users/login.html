@@ -3,26 +3,45 @@
 
 {% block login %}
 
-<form action="action_page.php">
+<form action="{% url "user:login" %}" method ='post'>
   {% csrf_token %}
+  {% if form.non_field_errors %}
+  <p>{{form.non_field_errors}}</p>
+  {% endif %}
+  <div class="register">
+    <label for="id_username"><b>Имя пользователя</b></label>
+    <input type="text" class = "form_control" value = '{% if form.username.value %}{{form.username.value}}{% endif %}'id = 'id_username' placeholder="Введите ваше имя пользователя" name="username" required>
+
+    <label for="id_password"><b>Пароль</b></label>
+    <input type="password" class = 'form_control' id = 'id_password'placeholder="Введите ваш пароль" name="password" required>
+
+
+  {% comment %}
     <div class="register">
+      <label for="{{form.username.id_for_label}}"><b>Имя пользователя</b></label>
+      {{form.username}}
+  
+      <label for="{{form.password.id_for_label}}"><b>Пароль</b></label>
+      {{form.password}}
+  {% endcomment %}
+
+
+    <!--<div class="register">
       <label for="uname"><b>Имя пользователя</b></label>
-      <input type="text" placeholder="Введите ваше имя пользователя" name="uname" required>
+      <input type="text" class = "form_control" placeholder="Введите ваше имя пользователя" name="uname" required>
   
       <label for="psw"><b>Пароль</b></label>
-      <input type="password" placeholder="Введите ваш пароль" name="psw" required>
+      <input type="password" class = 'form_control 'placeholder="Введите ваш пароль" name="psw" required>-->
   
       <button type="submit">Войти</button>
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Запомнить меня
-      </label>
-    </div>
-  
-    <div class="register" style="background-color:#f1f1f1">
-      <a href="#">Забыли пароль?</a> | <a href="{% url "users:register" %}">Создать аккаунт</a>
     </div>
   </form>
+    <div class="register" style="background-color:#f1f1f1">
+      <a href="#">Забыли пароль?</a> | <a href="{% url "user:registration" %}">Создать аккаунт</a>
+
+    </div>
+  
 
 {% endblock  %}
 
-
+<!--<a href="#">Забыли пароль?</a> | <a href="{% url "users:register" %}">Создать аккаунт</a>

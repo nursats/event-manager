@@ -1,28 +1,56 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib import auth, messages
+from django.db.models import Prefetch
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from events.models import Event
+
+from users.forms import UserLoginForm
+
+
+
 
 
 def login(request):
-    context ={
-        'title': 'login'
-    }
-    return render(request, 'users/login.html',context)
+    if request.method == 'POST':
+        form = UserLoginForm(data=request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = auth.authenticate(username = username, password = password)
+            if user:
+                auth.login(request,user)
+                return HttpResponseRedirect(reverse('events:home'))
+    else:
+        form = UserLoginForm()
 
-def register(request):
-    context ={
-        'title': 'register'
+    
+
+    context = {
+        'title': 'Home - Авторизация',
+        'form':form,
     }
-    return render(request, 'users/register.html',context)
+    return render(request, 'users/login.html', context)
+
+def registration(request):
+    
+    context = {
+        'title': 'Home - Регистрация',
+        
+    }
+    return render(request, 'users/registration.html', context)
+
 
 def profile(request):
-    context ={
-        'title': 'profile'
+    
+    context = {
+        'title': 'Home - Кабинет',
     }
-    return render(request, 'users/profile.html',context)
+    return render(request, 'users/profile.html', context)
+
+
+
 
 def logout(request):
-    context ={
-        'title': 'logout'
-    }
-    return render(request, 'users/logout.html',context)
-
-
+    ...
