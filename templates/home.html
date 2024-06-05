@@ -1,4 +1,5 @@
 {% load static %}
+{% load events_tags %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,13 +18,14 @@
     <div class="top">
       <nav>
         <ul>
-          <li><a href="{% url "events:home" %}">Главная</a></li>
+          <li><a href="{% url "main:index" %}">Главная</a></li>
           <li><a href="#cart">Избранное</a></li>
           {% if not user.is_authenticated %}
           <li class="login"><a href="{% url "user:login"%}">Войти</a></li>
           {% else %}
           <li class="dropdown">
-            <a href="javascript:void(0)">Мой профиль</a>
+            <a> {{user.username}}</a>
+            <a href="{% url "user:profile" %}">Мой профиль</a>
             <div class="dropdown-content">
               <a href="{% url 'user:profile' %}">Личный кабинет</a>
               {% if user.is_admin or user.is_staff %}
@@ -36,19 +38,34 @@
         </ul>
       </nav>
     </div>
-    <!-- Pagination -->
+    <div class="merop">
+      <h1>Мероприятия в Астане</h1>
+    </div>
+    
+    <div class="dropdown mb-2">
+      <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Каталог
+          
+      </button>
+      <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+          {% tag_categories as categories %}
+          {% for category in categories %}
+              <li><a class="dropdown-item text-white" href="{% url "catalog:index" category.slug %}">{{category.name}}</a></li>
+          {% endfor %}
 
+      </ul>
+  </div>
+    <!-- Pagination -->
+    {% block content %}{% endblock %}
     <!-- Footer -->
     <footer class="py-4 bg-dark">
       <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Nursat Seitov</p>
       </div>
     </footer>
-    {% block events %}{% endblock %}
-    {% block content %}{% endblock %}
-    {% block contacts %}{% endblock %}
-    {% block login %}{% endblock %}
-    {% block register %}{% endblock %}
-    {% block profile %}{% endblock %}
+    
+  
+   
   </body>
 </html>

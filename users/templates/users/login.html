@@ -1,7 +1,7 @@
 {% extends "home.html" %}
 {% load static %}
 
-{% block login %}
+{% block content %}
 
 <form action="{% url "user:login" %}" method ='post'>
   {% csrf_token %}

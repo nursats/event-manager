@@ -10,19 +10,6 @@ class UserLoginForm(AuthenticationForm):
     username = forms.CharField()
     password = forms.CharField()
     
-    '''username = forms.CharField(
-        widget=forms.TextInput(attrs={
-            "autofocus":True,
-            "class":'form_control',
-            'placeholder':'Введите ваше имя пользователя'
-            })
-        )
-    password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"autocomplete":"current-password",
-                                          "class":'form_control',
-                                          'placeholder':'Введите ваш пароль'}),
-    )'''
-    
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:

@@ -1,0 +1,92 @@
+{% extends "home.html" %}
+{% load static %}
+{% load events_tags %}
+{% block content %}
+<li class="dropdown2 ms-2">
+    <a href="#" class="dropbtn btn btn-dark">Фильтры</a>
+    <div class="dropdown2-content bg-dark p-3">
+      <form action="{% url "catalog:index" slug_url %}" method="get" data-bs-theme="dark">
+        <div class="form-check text-white">
+          <input class="form-check-input" type="checkbox" name="on_sale" id="flexCheckDefault" value="on" >
+          {% comment "" %}<input type="hidden" name="q" value="request.GET.q">{% endcomment %}
+          <label class="form-check-label" for="flexCheckDefault">
+            Товары по акции
+          </label>
+        </div>
+        <p class="text-white mt-3">Сортировать:</p>
+        <div class="form-check text-white">
+          <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault1" value="default"
+          {% if not request.GET.order_by or request.GET.order_by == 'default' %}checked{% endif %}>
+          <label class="form-check-label" for="flexRadioDefault1">
+            По умолчанию
+          </label>
+        </div>
+        <div class="form-check text-white">
+          <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault2" value="-capacity" 
+          {% if request.GET.order_by == '-capacity' %}checked{% endif %}>
+          <label class="form-check-label" for="flexRadioDefault2">
+            От больше мест
+          </label>
+        </div>
+        <div class="form-check text-white">
+          <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault3" value="capacity" 
+          {% if request.GET.order_by == 'capacity' %}checked{% endif %}>
+          <label class="form-check-label" for="flexRadioDefault3">
+            От меньше мест
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Применить</button>
+      </form>
+    </div>
+  </li>
+  <div class="search">
+    <input type="text" placeholder="Search..">
+  </div>
+  <div class="events">
+    <div class="event-container">
+      {% if events %}
+      {% for event in events %}
+      <div class="event-item">
+        <a href="{% url 'events:about' event.slug %}" class="img">
+          <img class="event-img" src="{{ event.image.url }}" />
+        </a>
+        <div class="event-name">{{ event.name }}</div>
+        <div class="event-date">{{ event.start_time.date }}</div>
+        <div class="event-time">{{ event.start_time|date:"H:i" }}</div>
+        <div class="event-capacity">{{ event.capacity }}</div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <p>No events found</p>
+      {% endif %}
+    </div>
+    </div>
+    <nav aria-label="Page navigation example" class="pagination-nav">
+        <ul class="pagination justify-content-center my-4">
+            <li class="page-item {% if not events.has_previous %}disabled{% endif %}">
+              <a class="page-link" href="{% if events.has_previous %}?{%change_params page=events.previous_page_number%}{% else %}
+              #
+              {% endif %}
+              ">Назад</a>
+            </li>
+      
+            {% for page in events.paginator.page_range %}
+            {% if page >= events.number|add:-2 and page <= events.number|add:+2 %}
+            <li 
+            class="page-item {% if events.number == page %}active{% endif %}">
+            <a class="page-link" href="?{%change_params page=page%}">{{page}}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            
+            <li class="page-item {% if not events.has_next %}disabled{% endif %}">
+              <a class="page-link" href="{% if events.has_next %}?{%change_params page=events.next_page_number%}{% else %}
+              #
+              {% endif %}
+              ">Следующая</a>
+            </li>
+        </ul>
+      </nav>
+  
+
+{%endblock%}

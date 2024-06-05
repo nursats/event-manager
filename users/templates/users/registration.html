@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block register %}
+{% block content %}
 <form action="{% url "user:registration" %}" method = 'POST'>
     {% csrf_token %}
     <div class="register">

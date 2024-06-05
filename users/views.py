@@ -22,7 +22,7 @@ def login(request):
             if user:
                 auth.login(request,user)
                 messages.success(request, f"(username), Вы вошли в аккаунт")
-                return HttpResponseRedirect(reverse('events:home'))
+                return HttpResponseRedirect(reverse('main:index'))
     else:
         form = UserLoginForm()
 
@@ -44,7 +44,7 @@ def registration(request):
             messages.success(request,f"(user.username), вы успешно зарегистрированы и вошли в аккаунт")
             if request.POST.get('next',None):
                 return HttpResponseRedirect(request.POST.get('next'))
-            return HttpResponseRedirect(reverse('events:home'))
+            return HttpResponseRedirect(reverse('main:index'))
     else:
         form = UserRegistrationForm()
     context = {
@@ -76,4 +76,4 @@ def profile(request):
 def logout(request):
     messages.success(request,f"(request.user.username), вы вышли из аккаунта")
     auth.logout(request)
-    return redirect(reverse('events:home'))
+    return redirect(reverse('main:index'))

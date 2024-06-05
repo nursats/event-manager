@@ -1,19 +1,8 @@
-from django.shortcuts import render,get_list_or_404
+from django.shortcuts import render,get_list_or_404, get_object_or_404
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from .models import Event, Categories
 
-def indexx(request):
-    events = Event.objects.all().order_by('start_time')
-    paginator = Paginator(events, 5)
-    current_page = paginator.page(1)
-    context = {
-        'title':'Home - Главная',
-        'content': 'event manager',
-        'events': events,
-    }
-    
-    return render(request, 'events/index.html',context)
 
 def about(request,event_slug):
     event = Event.objects.get(slug=event_slug)
@@ -25,11 +14,7 @@ def about(request,event_slug):
 
     return render(request, "events/about.html", context)
 
-def contacts(request):
-    context = {
-        "title": "Контакты"
-    }
-    return render(request,"events/contacts.html" , context)
+
 def catalog(request, category_slug):
     page = request.GET.get('page',1)
     order_by = request.GET.get('order_by',None)
@@ -53,4 +38,4 @@ def catalog(request, category_slug):
         "events": current_page,
         "slug_url":category_slug,
     }
-    return render(request, "events/index.html", context)
+    return render(request, "events/catalog.html", context)

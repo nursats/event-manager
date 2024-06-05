@@ -22,10 +22,11 @@ from event_management.settings import DEBUG
 from event_management import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('main.urls',namespace='main')),
+    path('catalog/', include('events.urls', namespace='catalog')),
     path('user/', include('users.urls',namespace='user')),
     path('accounts/', include("django.contrib.auth.urls")),
     path('', include('main.urls')),
-    path('catalog/', include('events.urls', namespace='catalog'))
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
