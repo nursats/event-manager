@@ -26,7 +26,6 @@ urlpatterns = [
     path('catalog/', include('events.urls', namespace='catalog')),
     path('user/', include('users.urls',namespace='user')),
     path('accounts/', include("django.contrib.auth.urls")),
-    path('', include('main.urls')),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
