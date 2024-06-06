@@ -41,27 +41,48 @@
       </form>
     </div>
   </li>
-  <form class="d-flex" role="search" action=" {% url "catalog:search"%}" method='get'>
-    <input class='form-control me-2' type="search" name='q'placeholder="Search" aria-label="Search">
+  <form class="d-flex" role="search" action="{% url "catalog:search" %}" method="get">
+    <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-success text-white" type="submit">Поиск</button>
-  </form>
+</form>
+{% if request.GET.q %}
+      <h3 class='mt-4'> Результаты поиска по запросу {{request.GET.q}}</h3>
+      {% if not events %}
+       <h2 class='mt-4'> По запросу ничего не найдено</h2>
+      {% endif %}
+      {% endif %}
   <div class="events">
     <div class="event-container">
-      {% if events %}
       {% for event in events %}
       <div class="event-item">
-        <a href="{% url 'events:about' event.slug %}" class="img">
-          <img class="event-img" src="{{ event.image.url }}" />
-        </a>
-        <div class="event-name">{{ event.name }}</div>
-        <div class="event-date">{{ event.start_time.date }}</div>
-        <div class="event-time">{{ event.start_time|date:"H:i" }}</div>
-        <div class="event-capacity">{{ event.capacity }}</div>
+        
+    </a>
+          <a href="{% url "catalog:about" event.slug %}">
+            <img class="event-img" src="{{ event.image.url }}" />
+            <p class="card-title">
+                {% autoescape off %}
+                    {% if event.headline %}
+                    {{event.headline}}
+                    {% else %}
+                    {{ event.name }}
+                    {% endif %}
+                {% endautoescape %}
+            </p>
+        </a>     
+        <p class="event-capacity">
+          {% autoescape off %}
+          {% if event.bodyline %}
+          {{ event.bodyline|truncatechars:100 }}
+          {% else %}
+          {{ event.description|truncatechars:35 }}
+          {% endif %}
+          {% endautoescape %}</p>
+        <p class="event-date">{{ event.start_time.date }}</p>
+        <p class="event-time">{{ event.start_time|date:"H:i" }}</p>
+        <p class="event-capacity">{{ event.capacity }}</p>
       </div>
       {% endfor %}
-      {% else %}
-      <p>No events found</p>
-      {% endif %}
+      
     </div>
     </div>
     <nav aria-label="Page navigation example" class="pagination-nav">

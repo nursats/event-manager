@@ -9,7 +9,8 @@ def about(request,event_slug):
 
     context = {
         "event": event,
-        "title": event.name       
+        "title": event.name,
+             
     }
 
     return render(request, "events/about.html", context)
