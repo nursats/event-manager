@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'events',
     'users',
     'main',
+    'carts',
 
     "debug_toolbar",
 ]

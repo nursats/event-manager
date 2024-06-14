@@ -5,27 +5,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static "deps/css/home.css" %}">
+    <link rel="stylesheet" href="{% static 'deps/css/home.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet" />
     <title>{{ title }}</title>
   </head>
   <body>
     <div class="top">
       <nav>
         <ul>
-          <li><a href="{% url "main:index" %}">Главная</a></li>
-          <li><a href="#cart">Избранное</a></li>
+          <li><a href="{% url 'main:index' %}">Главная</a></li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url "user:users_cart" %}">Избранное</a>
+          </li>
           {% if not user.is_authenticated %}
-          <li class="login"><a href="{% url "user:login"%}">Войти</a></li>
+          <li class="login"><a href="{% url 'user:login' %}">Войти</a></li>
           {% else %}
           <li class="dropdown">
-            <a> {{user.username}}</a>
-            <a href="{% url "user:profile" %}">Мой профиль</a>
+            <a>{{ user.username }}</a>
+            <a href="{% url 'user:profile' %}">Мой профиль</a>
             <div class="dropdown-content">
               <a href="{% url 'user:profile' %}">Личный кабинет</a>
               {% if user.is_admin or user.is_staff %}
@@ -41,21 +40,44 @@
     <div class="merop">
       <h1>Мероприятия в Астане</h1>
     </div>
-    
+    <!-- Значек корзины, вызывает модальное окно -->
+    <div>
+      <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-expanded="false">
+        <img class="mx-1" src="{% static 'deps/icons/basket2-fill.svg' %}" alt="Catalog Icon" width="24" height="24">
+        <span id="goods-in-cart-count">0</span>
+      </button>
+    </div>
+    <!-- Разметка модального окна корзины -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h3 class="text-center mb-4">Корзина</h3>
+            <div class="container" id="cart-items-container">
+              <!-- Разметка корзины -->
+              {% include "carts/includes/included_cart.html" %}
+              <!-- Закончилась разметка корзины -->
+            </div>
+            <a class="btn btn-dark" href="orders/create_order.html">Оформить заказ</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Закончилась разметка модального окна -->
     <div class="dropdown mb-2">
-      <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          Каталог
-          
+      <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Каталог
       </button>
       <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
-          {% tag_categories as categories %}
-          {% for category in categories %}
-              <li><a class="dropdown-item text-white" href="{% url "catalog:index" category.slug %}">{{category.name}}</a></li>
-          {% endfor %}
-
+        {% tag_categories as categories %}
+        {% for category in categories %}
+        <li><a class="dropdown-item text-white" href="{% url 'catalog:index' category.slug %}">{{ category.name }}</a></li>
+        {% endfor %}
       </ul>
-  </div>
+    </div>
     <!-- Pagination -->
     {% block content %}{% endblock %}
     <!-- Footer -->
@@ -64,8 +86,5 @@
         <p class="m-0 text-center text-white">Copyright &copy; Nursat Seitov</p>
       </div>
     </footer>
-    
-  
-   
   </body>
 </html>
