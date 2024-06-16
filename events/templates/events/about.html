@@ -1,6 +1,10 @@
 {% extends "home.html" %}
 {% load static %}
 
+{% block modal_cart %}
+{% include "includes/cart_button.html" %}
+{% endblock  %}
+
 {% block content %}
 <div class="eventcard">
     <div class="info2">
@@ -19,7 +23,7 @@
             <p class = "location"> локация</p>
             <div class="event-location">{{ event.place }}</div>
             <div class="button">
-                <button>Добавить в избранное</button>
+                <a href='{% url "cart:cart_add" event.slug %}' class='btn btn-dark add-to-cart'> Добавить в избранное</a>
             </div>
         </div>
     </div>

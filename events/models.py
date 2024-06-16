@@ -20,6 +20,7 @@ class Event(models.Model):
     description = models.TextField(blank=True, null=True)
     start_time = models.DateTimeField()
     place = models.CharField(max_length=150, unique=True )
+    price = models.DecimalField(default=0.00, max_digits=7, decimal_places=2,verbose_name = 'Цена')
     capacity = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(to=Categories, on_delete=models.CASCADE, verbose_name='Категория')
     image = models.ImageField(upload_to='goods_images', blank=True, null=True)
@@ -36,4 +37,7 @@ class Event(models.Model):
         formatted_date = self.start_time.strftime('%-d %B %Y')
         locale.setlocale(locale.LC_TIME, '')
         return formatted_date
+    
+    def sell_price(self):
+        return self.price
 

@@ -1,6 +1,12 @@
 {% extends "home.html" %}
 {% load static %}
 {% load events_tags %}
+
+{% block modal_cart %}
+{% include "includes/cart_button.html" %}
+{% endblock  %}
+
+
 {% block content %}
 <li class="dropdown2 ms-2">
     <a href="#" class="dropbtn btn btn-dark">Фильтры</a>
